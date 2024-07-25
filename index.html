@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <div class="calculator">
+      <input class="display" type="text" />
+      <div class="buttons">
+        <button class="btn function" id="clear">AC</button>
+        <button class="btn function" id="toggle-sign">DEL</button>
+        <button class="btn function" id="percent">%</button>
+        <button class="btn operator">/</button>
+
+        <button class="btn number">7</button>
+        <button class="btn number">8</button>
+        <button class="btn number">9</button>
+        <button class="btn operator">*</button>
+
+        <button class="btn number">4</button>
+        <button class="btn number">5</button>
+        <button class="btn number">6</button>
+        <button class="btn operator">-</button>
+
+        <button class="btn number">1</button>
+        <button class="btn number">2</button>
+        <button class="btn number">3</button>
+        <button class="btn operator">+</button>
+
+        <button class="btn number zero">0</button>
+        <button class="btn number">.</button>
+        <button class="btn operator">=</button>
+      </div>
+    </div>
+    <script>
+      let buttons = document.querySelectorAll("button");
+      let resultDisplayed = false;
+
+      for (let button of buttons) {
+        button.onclick = function () {
+          let display = document.querySelector("input");
+          let buttonText = button.innerText;
+
+          if (buttonText === "=") {
+            let value = display.value;
+            try {
+              display.value = eval(value);
+              resultDisplayed = true;
+            } catch {
+              display.value = "Error";
+              resultDisplayed = true;
+            }
+          } else if (buttonText === "AC") {
+            display.value = "";
+          } else if (buttonText === "DEL") {
+            display.value = display.value.slice(0, -1);
+          } else if (buttonText === "%") {
+            display.value = parseFloat(display.value) / 100;
+          } else {
+            if (resultDisplayed) {
+              if (
+                buttonText === "+" ||
+                buttonText === "-" ||
+                buttonText === "*" ||
+                buttonText === "/"
+              ) {
+                display.value += buttonText;
+              } else {
+                display.value = buttonText;
+              }
+              resultDisplayed = false;
+            } else {
+              display.value += buttonText;
+            }
+          }
+        };
+      }
+    </script>
+  </body>
+</html>
